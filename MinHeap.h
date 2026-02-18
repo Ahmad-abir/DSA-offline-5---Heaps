@@ -184,6 +184,13 @@ public:
     void heapify(int arr[], int n)
     {
         /**Write your code here**/
+        for(int i = 0  ; i < n ; i++){
+            heap[i] = arr[i];
+        }
+        size = n;
+        for(int i = (size-2)/2 ; i>=0 ; i--){
+            siftDown(i);
+        }
     }
 
     /**
