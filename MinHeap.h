@@ -131,11 +131,13 @@ public:
     void deleteKey(int i)
     {
         /**Write your code here**/
-        if(i==0) extractMin();
-        heap[i] = INT_MAX;
-        siftDown(i);
-        
-
+        if(i > size-1 || i<0) return ;
+        heap[i] = heap[size-1];
+        size--;
+        if(i < size){
+            siftUp(i);
+            siftDown(i);
+        }
     }
 
     /**
@@ -145,6 +147,15 @@ public:
     void printHeap(std::ofstream &outfile)
     {
         /**Write your code here**/
+        if(size == 0 ) return;
+        for(int i = 0 ; i < size ; i++){
+            if(i == size-1) {
+                outfile<<heap[i]<<std::endl;
+                continue;
+            }
+            outfile<<heap[i]<<" ";
+        }
+
     }
 
     /**
@@ -154,6 +165,17 @@ public:
     bool isValidMinHeap()
     {
         /**Write your code here**/
+        for(int i = 0 ; i < size ; i++){
+            int left_child = i*2+1;
+            int right_child = i*2+2;
+            if(left_child<size && heap[left_child] < heap[i]){
+                return false;
+            }
+            if(right_child<size && heap[right_child] < heap[i]){
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
