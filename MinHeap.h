@@ -19,7 +19,16 @@ private:
      */
     void siftUp(int i)
     {
-        /**Write your code here**/
+        /*(*Write your code here**/
+        if(i==0) return;
+        int parent_idx  = (i-1)/2;
+        if(heap[i]<heap[parent_idx]){
+            int temp = heap[i];
+            heap[i] = heap[parent_idx];
+            heap[parent_idx] = temp;
+            siftUp(parent_idx);
+        }
+
     }
 
     /**
@@ -28,6 +37,22 @@ private:
     void siftDown(int i)
     {
         /**Write your code here**/
+        if(i>size-1) return;
+        int left_idx = 2*i+1;
+        int right_idx = 2*i+2;
+        int smallest_idx = i;
+        if(left_idx<size-1 && heap[smallest_idx] > heap[left_idx]){
+            smallest_idx = left_idx;
+        }
+        if(right_idx < size && heap[smallest_idx] > heap[right_idx]){
+            smallest_idx = right_idx;
+        }
+        if(smallest_idx != i) {
+            int temp = heap[smallest_idx];
+            heap[smallest_idx]= heap[i];
+            heap[i] = temp;
+            siftDown(smallest_idx);
+        }
     }
 
 public:
@@ -40,7 +65,9 @@ public:
     void insert(int x)
     {
         /**Write your code here**/
-
+        heap[size] = x;
+        siftUp(size);
+        size++;
     }
 
     /**
@@ -49,7 +76,7 @@ public:
     int findMin()
     {
         /**Write your code here**/
-        if(size == 0) return 0;
+        if(size == 0) return -1;
         return heap[0];
     }
 
@@ -60,7 +87,12 @@ public:
     {
 
         /**Write your code here**/
-
+        if(size==0) return -1;
+        int min = heap[0];
+        heap[0] = heap[size-1];
+        siftDown(0);
+        size--;
+        return min;
     }
 
     /**
@@ -79,6 +111,7 @@ public:
     bool isEmpty()
     {
         /**Write your code here**/
+        return size==0;
     }
 
     /**
@@ -87,6 +120,9 @@ public:
     void decreaseKey(int i, int newValue)
     {
         /**Write your code here**/
+        if(i>size-1) return ;
+        heap[i] = newValue;
+        siftUp(i);
     }
 
     /**
@@ -95,6 +131,11 @@ public:
     void deleteKey(int i)
     {
         /**Write your code here**/
+        if(i==0) extractMin();
+        heap[i] = INT_MAX;
+        siftDown(i);
+        
+
     }
 
     /**
@@ -139,6 +180,10 @@ public:
     int replaceMin(int x)
     {
         /**Write your code here**/
+        int l = heap[0];
+        heap[0] = x;
+        siftDown(0);
+        return l;
     }
 };
 
