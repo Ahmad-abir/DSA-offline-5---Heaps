@@ -200,6 +200,13 @@ public:
     void heapSort(std::ofstream &outfile)
     {
         /**Write your code here**/
+        if(size == 0 ) return;
+        MinHeap tempHeap;
+        tempHeap.heapify(this->heap,this->size);
+        for(int i = 0 ; i < size;i++){
+            outfile<<tempHeap.extractMin()<<" ";
+        }
+        outfile<<std::endl;
     }
 
     /**
